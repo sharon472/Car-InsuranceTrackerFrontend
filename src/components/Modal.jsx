@@ -1,12 +1,12 @@
-// frontend/src/components/Modal.jsx
+
 
 import React, { useState, useEffect } from "react";
 
 const Modal = ({ data, employees, onClose, onSave }) => {
-  // Initialize state with the car data passed in (data is an empty object for 'Add Car')
+  
   const [car, setCar] = useState(data);
 
-  // Synchronize internal state when the parent component passes new data (e.g., when clicking 'Edit')
+  
   useEffect(() => { setCar(data); }, [data]);
 
   
