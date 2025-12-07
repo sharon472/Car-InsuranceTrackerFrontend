@@ -1,0 +1,67 @@
+// frontend/src/services/api.js
+const API_URL = "http://127.0.0.1:8000";
+
+// --- Car CRUD Operations ---
+export const fetchCars = async () => {
+  const res = await fetch(`${API_URL}/cars`);
+  if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+  return res.json();
+};
+
+export const addCar = async (car) => {
+  const res = await fetch(`${API_URL}/cars`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(car),
+  });
+  if (!res.ok) throw new Error(`Failed to add car: ${res.statusText}`);
+  return res.json();
+};
+
+export const updateCar = async (id, car) => {
+  const res = await fetch(`${API_URL}/cars/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(car),
+  });
+  if (!res.ok) throw new Error(`Failed to update car: ${res.statusText}`);
+  return res.json();
+};
+
+export const deleteCar = async (id) => {
+  const res = await fetch(`${API_URL}/cars/${id}`, {
+    method: "DELETE",
+  });
+  // FastAPI returns 204 No Content for a successful delete
+  if (!res.ok && res.status !== 204) throw new Error(`Failed to delete car: ${res.statusText}`);
+  return;
+};
+
+// --- Insurance Fetch (Placeholder) ---
+export const fetchInsurances = async () => {
+  // Assuming the insurances route is not fully implemented yet,
+  // return an empty array to prevent crashing.
+  // const res = await fetch(`${API_URL}/insurances`);
+  // return res.json();
+  return []; 
+};
+
+
+// ----------------------------------------------------
+// 🚨 CRITICAL: LOGIN FUNCTION WITH EXPORT 
+// ----------------------------------------------------
+export const loginUser = async (username, password) => {
+  const res = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  
+  if (!res.ok) {
+    // If login fails, try to parse the error message from the backend
+    const error = await res.json();
+    throw new Error(error.detail || "Login failed. Check username and password.");
+  }
+  
+  return res.json();
+};
