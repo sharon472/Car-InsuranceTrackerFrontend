@@ -1,9 +1,9 @@
-// frontend/src/components/LoginScreen.jsx (Final Working Code with Default Values)
+
 
 import React, { useState } from 'react';
 import { loginUser } from '../services/api';
 
-// Set default values for quick testing
+
 const DEFAULT_USERNAME = 'admin';
 const DEFAULT_PASSWORD = '1234';
 
@@ -16,10 +16,10 @@ const LoginScreen = ({ onLogin }) => {
     e.preventDefault();
     setError('');
     try {
-      // API call uses the values from the state (which default to admin/1234)
+      
       await loginUser(username, password);
       
-      // Calls the handler from App.jsx to set isAuthenticated to true
+      
       onLogin(); 
       
     } catch (err) {
@@ -40,7 +40,7 @@ const LoginScreen = ({ onLogin }) => {
               className="input"
               type="text"
               name="username"
-              // Use defaultValue for initial display, state update on change
+              
               defaultValue={DEFAULT_USERNAME}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -52,7 +52,7 @@ const LoginScreen = ({ onLogin }) => {
               className="input"
               type="password"
               name="password"
-              // Use defaultValue for initial display
+              
               defaultValue={DEFAULT_PASSWORD}
               onChange={(e) => setPassword(e.target.value)}
               required

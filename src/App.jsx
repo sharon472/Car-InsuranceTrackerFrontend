@@ -1,4 +1,4 @@
-// App.jsx (Final Working Code with Hardcoded Cars)
+
 
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header.jsx";
@@ -8,10 +8,10 @@ import EmployeesTable from "./components/EmployeesTable.jsx";
 import ActivityLog from "./components/ActivityLog.jsx";
 import Modal from "./components/Modal.jsx";
 import LoginScreen from "./components/LoginScreen.jsx"; 
-// 🚨 CHANGE: Only import API functions for local changes (Add/Update/Delete)
+
 import { addCar, updateCar, deleteCar } from "./services/api.js";
 
-// Define the initial car data outside the component for clarity (10 cars)
+
 const initialCars = [
   { id: 101, plate_number: "KCL 001", model: "Toyota Prado", assigned_id: 1, insurance_due: "2026-10-01", notes: "Executive car" },
   { id: 102, plate_number: "KDL 002", model: "Nissan Patrol", assigned_id: 2, insurance_due: "2025-01-15", notes: "Needs tire rotation" },
@@ -26,7 +26,7 @@ const initialCars = [
 ];
 
 const App = () => {
-  // Cars are initialized with hardcoded data and will NOT be overwritten by the API
+  
   const [cars, setCars] = useState(initialCars); 
   const [insurances, setInsurances] = useState([]);
   
@@ -41,12 +41,11 @@ const App = () => {
   
   const [isAuthenticated, setIsAuthenticated] = useState(false); 
 
-  // 🚨 REMOVED: The useEffect hook that called loadCars and loadInsurances
-  // 🚨 REMOVED: The loadCars and loadInsurances functions
+  
 
   const handleAddCar = async (car) => {
     try {
-      // 1. Attempt to save to the backend for data integrity
+      
       const saved = await addCar(car);
       setCars([...cars, saved]);
       setLog([{ 
@@ -56,7 +55,7 @@ const App = () => {
           ts: Date.now() 
       }, ...log]);
     } catch (err) {
-       // 2. If backend fails, generate a local ID and update local state only
+       
        const newCarId = Math.max(...cars.map(c => c.id)) + 1;
        const simulatedCar = { ...car, id: newCarId };
        setCars([...cars, simulatedCar]);
@@ -81,7 +80,7 @@ const App = () => {
           ts: Date.now() 
       }, ...log]);
     } catch (err) {
-      // If API fails, update locally
+      
       setCars(cars.map(c => c.id === car.id ? car : c));
       setLog([{ 
           id: Date.now(), 
@@ -98,7 +97,7 @@ const App = () => {
     
     try {
       await deleteCar(carId);
-      // Delete locally regardless of API status (for user experience)
+      
       setCars(cars.filter(c => c.id !== carId));
       setLog([{ 
           id: Date.now(), 
@@ -107,7 +106,7 @@ const App = () => {
           ts: Date.now() 
       }, ...log]);
     } catch (err) {
-      // Still remove from local state but log the API failure
+      
       setCars(cars.filter(c => c.id !== carId));
       setLog([{ 
           id: Date.now(), 
@@ -119,7 +118,7 @@ const App = () => {
     }
   };
 
-  // --- AUTH HANDLERS ---
+  
   const handleLogout = () => {
     setIsAuthenticated(false);
     setLog([{ 
@@ -132,7 +131,7 @@ const App = () => {
 
   const handleLogin = () => {
       setIsAuthenticated(true);
-      // 🚨 CHANGE: Removed API load calls
+      //Removed API load calls
       setLog([{ 
           id: Date.now(), 
           title: "User Login", 
@@ -141,12 +140,11 @@ const App = () => {
       }]);
   };
   
-  // --- CONDITIONAL RENDER ---
+  
   if (!isAuthenticated) {
       return <LoginScreen onLogin={handleLogin} />;
   }
   
-  // --- DASHBOARD RENDER ---
   return (
     <div className="container">
       <Header onAddCar={() => setModalData({})} onLogout={handleLogout} />

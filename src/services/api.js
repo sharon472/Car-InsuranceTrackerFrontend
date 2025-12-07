@@ -1,7 +1,7 @@
 // frontend/src/services/api.js
 const API_URL = "http://127.0.0.1:8000";
 
-// --- Car CRUD Operations ---
+
 export const fetchCars = async () => {
   const res = await fetch(`${API_URL}/cars`);
   if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -32,24 +32,18 @@ export const deleteCar = async (id) => {
   const res = await fetch(`${API_URL}/cars/${id}`, {
     method: "DELETE",
   });
-  // FastAPI returns 204 No Content for a successful delete
+  
   if (!res.ok && res.status !== 204) throw new Error(`Failed to delete car: ${res.statusText}`);
   return;
 };
 
-// --- Insurance Fetch (Placeholder) ---
+
 export const fetchInsurances = async () => {
-  // Assuming the insurances route is not fully implemented yet,
-  // return an empty array to prevent crashing.
-  // const res = await fetch(`${API_URL}/insurances`);
-  // return res.json();
+  
   return []; 
 };
 
 
-// ----------------------------------------------------
-// 🚨 CRITICAL: LOGIN FUNCTION WITH EXPORT 
-// ----------------------------------------------------
 export const loginUser = async (username, password) => {
   const res = await fetch(`${API_URL}/login`, {
     method: "POST",

@@ -9,12 +9,12 @@ const Modal = ({ data, employees, onClose, onSave }) => {
   // Synchronize internal state when the parent component passes new data (e.g., when clicking 'Edit')
   useEffect(() => { setCar(data); }, [data]);
 
-  // Don't render if no car data is available
+  
   if (!car) return null;
 
-  // Handles updates to all input fields
+  
   const handleChange = e => {
-    // Convert the assigned_id value to a number if it's not the empty string
+    
     const value = e.target.name === 'assigned_id' && e.target.value !== ""
       ? Number(e.target.value) 
       : e.target.value;
@@ -22,11 +22,11 @@ const Modal = ({ data, employees, onClose, onSave }) => {
     setCar({ ...car, [e.target.name]: value });
   };
   
-  // Handles form submission, calling the onSave handler from App.jsx
+  
   const handleSubmit = e => { 
     e.preventDefault(); 
     onSave(car); 
-    onClose(); // Automatically close the modal after saving
+    onClose(); 
   };
 
   return (
